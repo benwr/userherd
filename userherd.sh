@@ -11,7 +11,7 @@
 # - shepherd
 # - sudo
 
-set -e -u -o pipefail
+set -e -u
 
 username=$1
 uid=$(id -u "$username")
