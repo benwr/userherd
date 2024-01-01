@@ -21,4 +21,4 @@ mkdir -p "$XDG_RUNTIME_DIR"
 chmod 700 "$XDG_RUNTIME_DIR"
 chown "$username" "$XDG_RUNTIME_DIR"
 
-exec sudo -u shepherd
+exec sudo -u "$username" shepherd
