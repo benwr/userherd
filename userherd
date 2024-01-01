@@ -13,6 +13,7 @@
 
 set -e -u
 
+echo "path:$PATH"
 username=$1
 uid=$(id -u "$username")
 
