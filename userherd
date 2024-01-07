@@ -23,5 +23,4 @@ export XDG_RUNTIME_DIR="/run/user/$uid"
 mkdir -p "$XDG_RUNTIME_DIR"
 mount -t tmpfs -o "mode=0700,uid=$uid,gid=$gid" tmpfs "/run/user/$uid"
 
-# use sudo -i to give a login-ish environment
-exec setuidgid "$username" sudo -i -u "$username" shepherd
+exec setuidgid "$username" shepherd
