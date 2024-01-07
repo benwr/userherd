@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# This program was written by Ben Weinstein-Raun in 2023.
+# This program was written by Ben Weinstein-Raun in 2023 and 2024.
 # Anyone may use it for any purpose, under the terms of the CC0-1.0
 # License or the Apache 2.0 License, at the licensee's option. Both
 # licenses are distributed with the program, in the files
@@ -8,6 +8,7 @@
 
 # Requirements:
 # - coreutils (id)
+# - daemontools (setuidgid)
 # - shepherd
 # - sudo
 
@@ -16,10 +17,11 @@ set -e -u
 echo "path:$PATH"
 username=$1
 uid=$(id -u "$username")
+gid=$(id -g "$username")
 
 export XDG_RUNTIME_DIR="/run/user/$uid"
 mkdir -p "$XDG_RUNTIME_DIR"
-chmod 700 "$XDG_RUNTIME_DIR"
-chown "$username" "$XDG_RUNTIME_DIR"
+mount -t tmpfs -o "mode=0700,uid=$uid,gid=$gid" tmpfs "/run/user/$uid"
 
-exec sudo -i -u "$username" shepherd
+# use sudo -i to give a login-ish environment
+exec setuidgid "$username" sudo -i -u "$username" shepherd
